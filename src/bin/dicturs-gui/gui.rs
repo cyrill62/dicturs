@@ -530,7 +530,8 @@ impl DictursApp {
             if ui
                 .add_sized(
                     [ui.available_width(), 30.0],
-                    egui::Button::selectable(self.page == page, label),
+                    // The trailing grow atom takes the free space: text aligned left.
+                    egui::Button::selectable(self.page == page, (label, egui::Atom::grow())),
                 )
                 .clicked()
             {
@@ -603,7 +604,12 @@ impl DictursApp {
         } else {
             ui.visuals().weak_text_color()
         };
-        ui.label(RichText::new(text).small().color(color));
+        ui.horizontal(|ui| {
+            ui.label(RichText::new(text).small().color(color));
+            ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                ui.label(RichText::new(format!("v{}", dicturs::VERSION)).small().color(ui.visuals().weak_text_color()));
+            });
+        });
     }
 
     fn welcome(&mut self, ui: &mut egui::Ui) {

@@ -1407,9 +1407,17 @@ impl App {
         if let Some(d) = &self.downloading {
             status = format!("⬇ downloading {d}… · {status}");
         }
+        let version = format!("v{}", dicturs::VERSION);
+        let [status_area, version_area] =
+            Layout::horizontal([Constraint::Min(0), Constraint::Length(version.len() as u16 + 1)])
+                .areas(footer);
         f.render_widget(
             Paragraph::new(status).style(Style::new().fg(Color::Gray)),
-            footer,
+            status_area,
+        );
+        f.render_widget(
+            Line::from(version).right_aligned().style(Style::new().fg(Color::DarkGray)),
+            version_area,
         );
         self.draw_hints(f, hints);
 
