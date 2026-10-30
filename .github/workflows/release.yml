@@ -1,0 +1,128 @@
+# Builds the three binaries for every platform and attaches them to the GitHub release.
+# Trigger: publishing the release, which scripts/release.sh does with the CHANGELOG.md notes
+# (a draft triggers it once published). Re-run on an existing tag with "Run workflow".
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to (re)build, e.g. v0.2.0
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+  TAG: ${{ inputs.tag || github.event.release.tag_name }}
+
+jobs:
+  build:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu }
+          - { os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu }
+          - { os: macos-14, target: aarch64-apple-darwin }
+          - { os: macos-15-intel, target: x86_64-apple-darwin }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc }
+          - { os: windows-11-arm, target: aarch64-pc-windows-msvc }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Linux build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake clang libclang-dev pkg-config \
+            libasound2-dev libxcb1-dev libxkbcommon-dev libxkbcommon-x11-dev libx11-xcb-dev \
+            libwayland-dev libfontconfig-dev libfreetype-dev
+
+      - name: macOS build dependencies
+        if: runner.os == 'macOS'
+        run: brew list cmake >/dev/null 2>&1 || brew install cmake
+
+      # whisper.cpp refuses MSVC on Arm ("use clang"): build it with clang-cl through Ninja,
+      # in the Visual Studio Arm64 environment (headers, libraries, linker).
+      - name: Windows Arm64 developer environment
+        if: matrix.target == 'aarch64-pc-windows-msvc'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: arm64
+
+      - name: Windows Arm64 C/C++ compiler (clang-cl)
+        if: matrix.target == 'aarch64-pc-windows-msvc'
+        shell: pwsh
+        run: |
+          "C:\Program Files\LLVM\bin" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          @(
+            "CMAKE_GENERATOR=Ninja"
+            "CC_aarch64_pc_windows_msvc=clang-cl"
+            "CXX_aarch64_pc_windows_msvc=clang-cl"
+          ) | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - name: Build
+        run: cargo build --release --locked --target ${{ matrix.target }}
+
+      - name: Package (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          name=dicturs-${{ matrix.target }}
+          mkdir -p "dist/$name"
+          cp target/${{ matrix.target }}/release/{dicturs,dicturs-tui,dicturs-gui} README.md install.sh "dist/$name/"
+          tar -C dist -czf "dist/$name.tar.gz" "$name"
+          cd dist && shasum -a 256 "$name.tar.gz" > "$name.tar.gz.sha256"
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $name = "dicturs-${{ matrix.target }}"
+          New-Item -ItemType Directory -Force "dist/$name" | Out-Null
+          foreach ($b in "dicturs", "dicturs-tui", "dicturs-gui") {
+            Copy-Item "target/${{ matrix.target }}/release/$b.exe" "dist/$name/"
+          }
+          Copy-Item README.md "dist/$name/"
+          Compress-Archive -Path "dist/$name" -DestinationPath "dist/$name.zip"
+          $hash = (Get-FileHash "dist/$name.zip" -Algorithm SHA256).Hash.ToLower()
+          "$hash  $name.zip" | Out-File -Encoding ascii "dist/$name.zip.sha256"
+
+      - name: Upload to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: |
+            dist/*.tar.gz
+            dist/*.zip
+            dist/*.sha256
+
+  install-script:
+    name: install.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - name: Point the script at this repository
+        run: sed -i "s#cyrill62/dicturs#${{ github.repository }}#" install.sh
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: install.sh

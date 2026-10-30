@@ -1,0 +1,56 @@
+[package]
+name = "dicturs"
+version = "0.1.0"
+edition = "2024"
+description = "Run shell commands with your voice, offline: CLI, terminal UI and desktop UI"
+repository = "https://github.com/cyrill62/dicturs"
+keywords = ["voice", "speech", "whisper", "tui", "launcher"]
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"], optional = true }
+cpal = "0.18.2"
+crossterm = { version = "0.29.0", optional = true }
+directories = "6.0.0"
+ratatui = { version = "0.30.2", optional = true }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+shlex = "2.0.1"
+strsim = "0.11.1"
+toml = "1.1.8"
+unicode-normalization = "0.1.26"
+whisper-rs = { version = "0.16.0", optional = true }
+# OpenGL renderer (glow): lighter than wgpu and runs without Vulkan.
+eframe = { version = "0.37.0", optional = true, default-features = false, features = ["glow", "default_fonts", "wayland", "x11", "accesskit", "clipboard", "links"] }
+egui_extras = { version = "0.37.0", optional = true, features = ["svg"] }
+dark-light = { version = "3.0.0", optional = true }
+# Bundled emoji/icon glyphs (egui 0.37 no longer ships them by default).
+epaint = { version = "0.37.0", optional = true, features = ["monochrome_emoji_fonts"] }
+# PNG encoder for the debug-only screenshot tour (scripts/screenshots.sh).
+png = { version = "0.17.16", optional = true }
+
+[features]
+# Pick the binaries at build time, e.g. `cargo install --path . --no-default-features --features whisper,cli,tui`.
+default = ["whisper", "cli", "tui", "gui"]
+whisper = ["dep:whisper-rs"]
+cli = ["dep:clap"]
+tui = ["dep:ratatui", "dep:crossterm"]
+gui = ["dep:eframe", "dep:egui_extras", "dep:dark-light", "dep:epaint", "dep:png"]
+
+[[bin]]
+name = "dicturs"
+path = "src/bin/dicturs.rs"
+required-features = ["cli"]
+
+[[bin]]
+name = "dicturs-tui"
+path = "src/bin/dicturs-tui/main.rs"
+required-features = ["tui"]
+
+[[bin]]
+name = "dicturs-gui"
+path = "src/bin/dicturs-gui/main.rs"
+required-features = ["gui"]
+
+[profile.release]
+strip = true

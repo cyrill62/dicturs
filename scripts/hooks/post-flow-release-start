@@ -1,0 +1,4 @@
+#!/bin/sh
+# git-flow (AVH) hook: after "git flow release start X.Y.Z", sets the version and changelog.
+# Enabled with: git config gitflow.path.hooks scripts/hooks
+exec "$(git rev-parse --show-toplevel)/scripts/bump-version.sh"

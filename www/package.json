@@ -1,0 +1,32 @@
+{
+  "name": "dicturs-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run copy-assets && vike dev",
+    "build": "npm run copy-assets && vike build",
+    "preview": "vike preview",
+    "typecheck": "tsc --noEmit",
+    "copy-assets": "node scripts/copy-assets.mjs"
+  },
+  "dependencies": {
+    "i18next": "^26.5.12",
+    "motion": "^14.9.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-i18next": "^17.1.9",
+    "vike": "^0.4.268",
+    "vike-react": "^0.6.32"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "daisyui": "^5.7.50",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

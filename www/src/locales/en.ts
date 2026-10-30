@@ -1,0 +1,97 @@
+export const en = {
+  nav: { screenshots: 'Screenshots', features: 'Features', apps: 'Apps', install: 'Install', faq: 'FAQ', github: 'GitHub' },
+  hero: {
+    badge: 'Offline · Open source · Written in Rust',
+    title1: 'Say it.',
+    title2: 'It runs.',
+    subtitle:
+      'Dicturs listens to your microphone and runs your shell commands when you say their keyword. Speech recognition runs on your machine with whisper.cpp: nothing leaves your computer.',
+    install: 'Install',
+    github: 'View on GitHub',
+  },
+  demo: {
+    listening: 'listening',
+    heard: 'heard',
+    matched: 'matched',
+    runs: 'runs',
+    phrases: [
+      { said: 'open browser', keyword: 'open browser', command: 'xdg-open https://duckduckgo.com' },
+      { said: 'search for rust ratatui', keyword: 'search for', command: 'xdg-open "https://duckduckgo.com/?q=rust%20ratatui"' },
+      { said: 'volume up', keyword: 'volume up', command: 'wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+' },
+      { said: 'lock screen', keyword: 'lock screen', command: 'loginctl lock-session' },
+      { said: 'change model small', keyword: 'change model', command: '@model small' },
+    ],
+  },
+  screenshots: {
+    title: 'See it in action',
+    subtitle: 'The desktop app, in dark and light mode. Click a screenshot to browse them all.',
+    open: 'Open the screenshot viewer',
+    close: 'Close',
+    previous: 'Previous',
+    next: 'Next',
+    items: [
+      { tab: 'Commands', title: 'Commands and categories' },
+      { tab: 'Light mode', title: 'Follows your system light mode' },
+      { tab: 'Editor', title: 'Create a command, with arguments' },
+      { tab: 'Listen', title: 'What was heard, and what ran' },
+      { tab: 'Settings', title: 'Every setting at hand' },
+      { tab: 'Models', title: 'Download and switch speech models' },
+      { tab: 'Launchers', title: 'wofi, rofi, fuzzel and friends' },
+    ],
+  },
+  apps: {
+    title: 'One config, three apps',
+    subtitle: 'Install only what you need: each one is a separate binary.',
+    cli: { name: 'Command line', text: 'Script everything: add, toggle and list commands, listen headless as a service, simulate phrases, manage models.' },
+    tui: { name: 'Terminal UI', text: 'A fast ratatui interface with mouse support: categories tree, live transcription log, settings, models and launchers.' },
+    gui: { name: 'Desktop app', text: 'A light native window built with egui, which follows your system dark or light mode.' },
+  },
+  features: {
+    title: 'Everything a voice launcher needs',
+    items: [
+      { icon: '🔒', title: 'Private by design', text: 'whisper.cpp runs locally, from the tiny model to large-v3-turbo. No cloud, no account.' },
+      { icon: '🐚', title: 'Your shell, your aliases', text: 'Commands run in bash, zsh, fish or nushell with your aliases and functions loaded.' },
+      { icon: '🗂️', title: 'Categories and toggles', text: 'Organize commands in nested categories; switch a command or a whole category off without deleting it.' },
+      { icon: '💬', title: 'Arguments by voice', text: '{args} receives the words said after the keyword: “search for rust tutorials”. Only letters and digits get through.' },
+      { icon: '🎛️', title: 'Built-in voice controls', text: '“stop listening”, “change model small”, “change language french”, “dry run”.' },
+      { icon: '🚀', title: 'Launcher integration', text: 'Pick or toggle commands from wofi, rofi, fuzzel, tofi, bemenu, walker, dmenu or fzf, and install them from the app.' },
+      { icon: '🎯', title: 'Fuzzy matching', text: 'Accents, punctuation and small recognition errors are forgiven. Add an optional wake word.' },
+      { icon: '🌍', title: 'Speaks your language', text: 'The recognition language follows your system locale. Sample commands come in English or French.' },
+    ],
+  },
+  steps: {
+    title: 'Up and running in a minute',
+    items: [
+      { title: 'Install', text: 'Run the install script, or build from source with Cargo.' },
+      { title: 'Pick a model', text: '“dicturs model use base” downloads a speech model (142 MB).' },
+      { title: 'Talk', text: 'Open the terminal or desktop app, turn on the samples you like, and start listening.' },
+    ],
+  },
+  install: {
+    title: 'Install',
+    subtitle: 'Linux and macOS (x86_64 and arm64). Windows builds (x86_64 and arm64) are on the releases page.',
+    script: 'Install script',
+    cargo: 'From source',
+    windows: 'Windows',
+    copy: 'Copy',
+    copied: 'Copied!',
+    scriptNote: 'Installs dicturs, dicturs-tui and dicturs-gui into ~/.local/bin. Choose binaries and folder:',
+    cargoNote: 'Needs Rust, cmake and a C++ compiler. Choose the binaries with Cargo features:',
+    windowsNote: 'Download dicturs-x86_64-pc-windows-msvc.zip (or dicturs-aarch64-pc-windows-msvc.zip on Arm) from the latest release and unzip it in a folder on your PATH.',
+    releases: 'Latest release',
+    then: 'Then download a speech model:',
+  },
+  faq: {
+    title: 'Questions',
+    items: [
+      { q: 'Does it send my voice anywhere?', a: 'No. Audio is captured, cut into phrases and transcribed locally by whisper.cpp. Only the commands you configured run.' },
+      { q: 'Which model should I use?', a: '“base” is a good start for short commands on any CPU. “small” is more accurate; “large-v3-turbo” is best with a GPU.' },
+      { q: 'Does it work with PipeWire / WirePlumber?', a: 'Yes, through ALSA. If the default device is silent, set input_device to “alsa:pulse” and check that your microphone is not muted.' },
+      { q: 'Can a spoken phrase inject shell code?', a: 'No. Arguments keep only letters, digits and spaces before they reach your command.' },
+      { q: 'Can I use another speech engine?', a: 'Yes: the “external” engine runs any program that prints a transcription, such as Vosk or faster-whisper.' },
+    ],
+  },
+  footer: { made: 'Made with Rust, whisper.cpp, ratatui and egui.', license: 'Open source' },
+}
+
+export type Messages = typeof en

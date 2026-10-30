@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+    paths-ignore: ["www/**"]
+  pull_request:
+    paths-ignore: ["www/**"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Linux build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends cmake clang libclang-dev pkg-config \
+            libasound2-dev libxcb1-dev libxkbcommon-dev libxkbcommon-x11-dev libx11-xcb-dev \
+            libwayland-dev libfontconfig-dev libfreetype-dev
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - name: CLI-only build links no UI
+        if: runner.os == 'Linux'
+        run: cargo build --locked --no-default-features --features whisper,cli
+      - name: install.sh syntax
+        if: runner.os != 'Windows'
+        run: sh -n install.sh

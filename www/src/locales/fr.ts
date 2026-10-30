@@ -1,0 +1,97 @@
+import type { Messages } from './en'
+
+export const fr: Messages = {
+  nav: { screenshots: 'Captures', features: 'Fonctions', apps: 'Applications', install: 'Installer', faq: 'FAQ', github: 'GitHub' },
+  hero: {
+    badge: 'Hors ligne · Open source · Écrit en Rust',
+    title1: 'Dites-le.',
+    title2: 'C’est lancé.',
+    subtitle:
+      'Dicturs écoute votre micro et lance vos commandes shell quand vous prononcez leur mot-clé. La reconnaissance vocale tourne sur votre machine avec whisper.cpp : rien ne quitte votre ordinateur.',
+    install: 'Installer',
+    github: 'Voir sur GitHub',
+  },
+  demo: {
+    listening: 'à l’écoute',
+    heard: 'entendu',
+    matched: 'reconnu',
+    runs: 'lance',
+    phrases: [
+      { said: 'ouvre le navigateur', keyword: 'ouvre le navigateur', command: 'xdg-open https://duckduckgo.com' },
+      { said: 'recherche recette crêpes', keyword: 'recherche', command: 'xdg-open "https://duckduckgo.com/?q=recette%20cr%C3%AApes"' },
+      { said: 'monte le son', keyword: 'monte le son', command: 'wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+' },
+      { said: 'verrouille l’écran', keyword: 'verrouille l’écran', command: 'loginctl lock-session' },
+      { said: 'change de modèle petit', keyword: 'change de modèle', command: '@model small' },
+    ],
+  },
+  screenshots: {
+    title: 'À l’œuvre',
+    subtitle: 'L’application de bureau, en mode sombre et clair. Cliquez sur une capture pour toutes les parcourir.',
+    open: 'Ouvrir la visionneuse de captures',
+    close: 'Fermer',
+    previous: 'Précédente',
+    next: 'Suivante',
+    items: [
+      { tab: 'Commandes', title: 'Commandes et catégories' },
+      { tab: 'Mode clair', title: 'Suit le mode clair du système' },
+      { tab: 'Éditeur', title: 'Créer une commande, avec arguments' },
+      { tab: 'Écoute', title: 'Ce qui a été entendu, et ce qui a été lancé' },
+      { tab: 'Réglages', title: 'Tous les réglages sous la main' },
+      { tab: 'Modèles', title: 'Télécharger et changer de modèle vocal' },
+      { tab: 'Lanceurs', title: 'wofi, rofi, fuzzel et compagnie' },
+    ],
+  },
+  apps: {
+    title: 'Une configuration, trois applications',
+    subtitle: 'N’installez que ce dont vous avez besoin : chacune est un binaire séparé.',
+    cli: { name: 'Ligne de commande', text: 'Scriptez tout : ajouter, activer et lister les commandes, écouter en tâche de fond, simuler des phrases, gérer les modèles.' },
+    tui: { name: 'Interface terminal', text: 'Une interface ratatui rapide, à la souris aussi : arbre de catégories, journal des transcriptions, réglages, modèles et lanceurs.' },
+    gui: { name: 'Application de bureau', text: 'Une fenêtre native et légère, construite avec egui, qui suit le mode sombre ou clair du système.' },
+  },
+  features: {
+    title: 'Tout ce qu’il faut à un lanceur vocal',
+    items: [
+      { icon: '🔒', title: 'Privé par conception', text: 'whisper.cpp tourne en local, du modèle tiny à large-v3-turbo. Ni cloud, ni compte.' },
+      { icon: '🐚', title: 'Votre shell, vos alias', text: 'Les commandes s’exécutent dans bash, zsh, fish ou nushell avec vos alias et fonctions.' },
+      { icon: '🗂️', title: 'Catégories et interrupteurs', text: 'Rangez les commandes en catégories imbriquées ; désactivez une commande ou une catégorie entière sans la supprimer.' },
+      { icon: '💬', title: 'Des arguments à la voix', text: '{args} reçoit les mots dits après le mot-clé : « recherche tutoriels rust ». Seuls lettres et chiffres passent.' },
+      { icon: '🎛️', title: 'Contrôles vocaux intégrés', text: '« arrête d’écouter », « change de modèle petit », « change de langue anglais », « mode test ».' },
+      { icon: '🚀', title: 'Intégration aux lanceurs', text: 'Choisissez ou activez vos commandes depuis wofi, rofi, fuzzel, tofi, bemenu, walker, dmenu ou fzf, et installez-les depuis l’application.' },
+      { icon: '🎯', title: 'Correspondance tolérante', text: 'Accents, ponctuation et petites erreurs de reconnaissance sont pardonnés. Mot d’éveil en option.' },
+      { icon: '🌍', title: 'Parle votre langue', text: 'La langue de reconnaissance suit celle du système. Les commandes d’exemple existent en anglais et en français.' },
+    ],
+  },
+  steps: {
+    title: 'Prêt en une minute',
+    items: [
+      { title: 'Installer', text: 'Lancez le script d’installation, ou compilez depuis les sources avec Cargo.' },
+      { title: 'Choisir un modèle', text: '« dicturs model use base » télécharge un modèle de reconnaissance (142 Mo).' },
+      { title: 'Parler', text: 'Ouvrez l’application terminal ou bureau, activez les exemples qui vous plaisent et lancez l’écoute.' },
+    ],
+  },
+  install: {
+    title: 'Installer',
+    subtitle: 'Linux et macOS (x86_64 et arm64). Les versions Windows (x86_64 et arm64) sont sur la page des releases.',
+    script: 'Script',
+    cargo: 'Depuis les sources',
+    windows: 'Windows',
+    copy: 'Copier',
+    copied: 'Copié !',
+    scriptNote: 'Installe dicturs, dicturs-tui et dicturs-gui dans ~/.local/bin. Choisir les binaires et le dossier :',
+    cargoNote: 'Nécessite Rust, cmake et un compilateur C++. Choisissez les binaires avec les features Cargo :',
+    windowsNote: 'Téléchargez dicturs-x86_64-pc-windows-msvc.zip (ou dicturs-aarch64-pc-windows-msvc.zip sur Arm) depuis la dernière release et décompressez-le dans un dossier de votre PATH.',
+    releases: 'Dernière release',
+    then: 'Puis téléchargez un modèle de reconnaissance :',
+  },
+  faq: {
+    title: 'Questions',
+    items: [
+      { q: 'Ma voix est-elle envoyée quelque part ?', a: 'Non. Le son est capté, découpé en phrases et transcrit localement par whisper.cpp. Seules les commandes que vous avez configurées s’exécutent.' },
+      { q: 'Quel modèle choisir ?', a: '« base » suffit pour des commandes courtes sur n’importe quel processeur. « small » est plus précis ; « large-v3-turbo » est idéal avec un GPU.' },
+      { q: 'Compatible PipeWire / WirePlumber ?', a: 'Oui, via ALSA. Si le périphérique par défaut reste muet, réglez input_device sur « alsa:pulse » et vérifiez que le micro n’est pas coupé.' },
+      { q: 'Une phrase peut-elle injecter du code shell ?', a: 'Non. Les arguments ne gardent que lettres, chiffres et espaces avant d’atteindre votre commande.' },
+      { q: 'Puis-je utiliser un autre moteur ?', a: 'Oui : le moteur « external » lance n’importe quel programme qui affiche une transcription, comme Vosk ou faster-whisper.' },
+    ],
+  },
+  footer: { made: 'Fait avec Rust, whisper.cpp, ratatui et egui.', license: 'Open source' },
+}
