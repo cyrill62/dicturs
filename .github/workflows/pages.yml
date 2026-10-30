@@ -4,7 +4,7 @@ name: Website
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
     paths: ["www/**", "install.sh", "assets/logo.svg", "docs/screenshots/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
@@ -30,20 +30,8 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: www/package-lock.json
-      - id: pages
-        uses: actions/configure-pages@v5
       - run: npm ci
-      - run: npm run typecheck
-      - name: Build
-        run: npm run build
-        env:
-          BASE_URL: ${{ steps.pages.outputs.base_path }}/
-          VITE_REPO: ${{ github.repository }}
-          VITE_SITE_URL: ${{ steps.pages.outputs.base_url }}
-      - name: Point install.sh at this repository and site
-        run: |
-          sed -i -e "s#cyrill62/dicturs#${{ github.repository }}#g" \
-                 -e "s#https://cyrill62.github.io/dicturs#${{ steps.pages.outputs.base_url }}#g" dist/client/install.sh
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: www/dist/client
