@@ -33,8 +33,8 @@ Three separate binaries, all on the same config:
 Linux and macOS (x86_64, arm64), from the latest release:
 
 ```sh
-curl -fsSL https://cyrill62.github.io/dicturs/install.sh | sh                          # all three
-curl -fsSL https://cyrill62.github.io/dicturs/install.sh | sh -s -- --bins cli,tui     # pick binaries
+curl -fsSL https://dicturs.app/install.sh | sh                          # all three
+curl -fsSL https://dicturs.app/install.sh | sh -s -- --bins cli,tui     # pick binaries
 sh install.sh --uninstall                                                              # remove
 ```
 

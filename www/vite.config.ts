@@ -4,7 +4,10 @@ import vike from 'vike/plugin'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // GitHub Pages serves the site under /<repo>/: the workflow passes it as BASE_URL.
+  // Served at the root of https://dicturs.app (GitHub Pages, custom domain). BASE_URL overrides
+  // it, e.g. "/dicturs/" for a project site without the custom domain.
   base: process.env.BASE_URL ?? '/',
   plugins: [vike(), react(), tailwindcss()],
+  // The logo and screenshots are imported from the repo root, so they stay in one place.
+  server: { fs: { allow: ['..'] } },
 })

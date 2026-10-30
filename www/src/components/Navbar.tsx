@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { LANGUAGES, setLanguage, type Language } from '../i18n'
+import { LOGO } from '../assets'
 import { REPO_URL } from '../site'
 import { GithubIcon } from './icons'
 
@@ -18,7 +19,7 @@ export function Navbar() {
       <nav className="navbar mx-auto max-w-6xl px-4">
         <div className="navbar-start">
           <a href="#top" className="flex items-center gap-2 text-xl font-bold">
-            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="size-8" />
+            <img src={LOGO} alt="" className="size-8" />
             <span>
               dictu<span className="text-gradient">rs</span>
             </span>

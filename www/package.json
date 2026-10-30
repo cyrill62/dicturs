@@ -3,11 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npm run copy-assets && vike dev",
-    "build": "npm run copy-assets && vike build",
+    "dev": "vike dev",
+    "build": "vike build && node -e \"require('node:fs').copyFileSync('../install.sh', 'dist/client/install.sh')\"",
     "preview": "vike preview",
-    "typecheck": "tsc --noEmit",
-    "copy-assets": "node scripts/copy-assets.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "i18next": "^26.5.12",

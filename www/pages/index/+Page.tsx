@@ -5,6 +5,7 @@ import { Install } from '../../src/components/Install'
 import { Reveal, SectionTitle } from '../../src/components/Reveal'
 import { Screenshots } from '../../src/components/Screenshots'
 import { VoiceDemo } from '../../src/components/VoiceDemo'
+import { LOGO } from '../../src/assets'
 import { REPO_URL } from '../../src/site'
 
 type Item = { icon?: string; title: string; text: string }
@@ -120,7 +121,7 @@ function GuiPreview() {
   return (
     <div className="flex h-full w-full overflow-hidden rounded-lg bg-base-100 text-base-content">
       <div className="w-1/4 space-y-1 bg-base-200 p-2">
-        <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" className="mb-2 size-5" />
+        <img src={LOGO} alt="" className="mb-2 size-5" />
         {[1, 2, 3].map((i) => (
           <div key={i} className={`h-2 rounded ${i === 1 ? 'bg-primary' : 'bg-base-300'}`} />
         ))}

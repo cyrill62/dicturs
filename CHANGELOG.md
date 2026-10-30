@@ -7,6 +7,10 @@ All notable changes to Dicturs are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-30
+
+Move to dicturs.app domain
+
 ## [0.1.2] - 2026-10-30
 
 Fix the website deploy workflow
@@ -26,5 +30,6 @@ Fix the website deploy workflow
 - Whisper model catalog with download, switch and removal.
 - Install script, release builds for Linux, macOS and Windows, website on GitHub Pages.
 
-[Unreleased]: https://github.com/cyrill62/dicturs/compare/0.1.2...HEAD
-[0.1.2]: https://github.com/cyrill62/dicturs/releases/tag/0.1.2
+[Unreleased]: https://github.com/cyrill62/dicturs/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/cyrill62/dicturs/compare/v0.1.2...0.1.3
+[0.1.2]: https://github.com/cyrill62/dicturs/releases/tag/v0.1.2

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { screenshot } from '../assets'
 import { Reveal, SectionTitle } from './Reveal'
 
 /** Files in docs/screenshots (scripts/screenshots.sh), in the order of `screenshots.items`. */
@@ -22,7 +23,7 @@ type Item = { tab: string; title: string }
 export function Screenshots() {
   const { t } = useTranslation()
   const items = t('screenshots.items', { returnObjects: true }) as Item[]
-  const shots = FILES.map((file, i) => ({ src: `${import.meta.env.BASE_URL}screenshots/${file}`, ...items[i] }))
+  const shots = FILES.map((file, i) => ({ src: screenshot(file), ...items[i] }))
   const [index, setIndex] = useState(0)
   const [open, setOpen] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)

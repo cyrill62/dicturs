@@ -1,6 +1,2 @@
 node_modules/
 dist/
-# Copied from the repository root at build time (scripts/copy-assets.mjs).
-public/install.sh
-public/logo.svg
-public/screenshots/

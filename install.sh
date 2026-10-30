@@ -1,8 +1,8 @@
 #!/bin/sh
 # Dicturs installer: downloads the latest release for this machine (Linux, macOS).
 #
-#   curl -fsSL https://cyrill62.github.io/dicturs/install.sh | sh
-#   curl -fsSL https://cyrill62.github.io/dicturs/install.sh | sh -s -- --bins cli,tui --dir ~/bin
+#   curl -fsSL https://dicturs.app/install.sh | sh
+#   curl -fsSL https://dicturs.app/install.sh | sh -s -- --bins cli,tui --dir ~/bin
 #
 # Options (or environment variables):
 #   --bins LIST      binaries to install: cli,tui,gui (default: all)       DICTURS_BINS
